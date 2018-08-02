@@ -8,9 +8,9 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 //var MongoStore = require('connect-mongo');
-var settings = require('./settings');                                                                                                                                                                                                                                                           
+var settings = require('./settings');
 const session = require('express-session');
-const MongoStore =require('connect-mongo')(session);
+const MongoStore = require('connect-mongo')(session);
 
 var app = express();
 
@@ -38,12 +38,12 @@ app.use('/u/:user', usersRouter);
 
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
@@ -51,6 +51,26 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
+});
+
+app.dynamicHelpers({
+  user: function (req, res) {
+    return req.session.user;
+  },
+  error: function (req, res) {
+    var err = req.flash('error');
+    if (err.length)
+      return err;
+    else
+      return null;
+  },
+  success: function (req, res) {
+    var succ = req.flash('success');
+    if (succ.length)
+      return succ;
+    else
+      return null;
+  },
 });
 
 module.exports = app;
