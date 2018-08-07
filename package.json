@@ -15,6 +15,7 @@
     "morgan": "~1.9.0",
     "mongodb": ">=0.9.9",
     "connect-mongo": ">=0.1.7",
-    "express-session": "~1.15.6"
+    "express-session": "~1.15.6",
+    "connect-flash": "0.1.1"
   }
 }
